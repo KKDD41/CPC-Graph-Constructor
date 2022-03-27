@@ -48,3 +48,4 @@ class RealizationDlg(QWidget):
     def save_realization(self):
         image = self.label.pixmap().toImage()
         image.save('realization.png')
+
