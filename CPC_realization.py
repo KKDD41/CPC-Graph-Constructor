@@ -6,6 +6,16 @@ import numpy as np
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 
 
+def graph_to_string(graph):
+    result = ''
+    for v in graph.nodes:
+        result += 'v '
+        for u in graph.neighbors(v):
+            result += 'u '
+        result += '\n'
+    return result
+
+
 class Realization:
     """
     Class of CPC-graph realization that contains a CPC-graph and coordinates of corresponding polygonal chain.
@@ -45,3 +55,4 @@ class Realization:
                     self.graph.add_edge(alphabet[i], alphabet[j])
         nx.draw(self.graph, with_labels=True)
         plt.savefig("graph.png")
+        plt.close()

@@ -6,13 +6,26 @@ from CPC_realization import Realization, alphabet
 from drawing_window import DrawingWindow
 
 
-class RealizationDlg(QDialog):
+class RealizationDlg(QWidget):
     def __init__(self, myRealization):
         super().__init__()
         self.realization = myRealization
 
+        layout = QtWidgets.QVBoxLayout(self)
+        self.button = QtWidgets.QPushButton(self)
+        self.button.setFont(QFont('Calibri', 12))
+        self.button.setText('Push to save realization')
+        self.button.clicked.connect(self.save_realization)
+        layout.addWidget(self.button)
+
+        self.label = QtWidgets.QLabel()
+        canvas = QtGui.QPixmap(800, 800)
+        canvas.fill(QtCore.Qt.white)
+        self.label.setPixmap(canvas)
+        layout.addWidget(self.label)
+
     def paintEvent(self, event):
-        painter = QPainter()
+        painter = QPainter(self.label.pixmap())
         painter.begin(self)
         if len(self.realization.vector_of_segments) != 0:
             for i in range(len(self.realization.vector_of_segments) - 1):
@@ -31,3 +44,7 @@ class RealizationDlg(QDialog):
                 (self.realization.vector_of_segments[0][1] + self.realization.vector_of_segments[-1][1]) // 2,
                 alphabet[len(self.realization.vector_of_segments) - 1])
         painter.end()
+
+    def save_realization(self):
+        image = self.label.pixmap().toImage()
+        image.save('realization.png')

@@ -20,6 +20,7 @@ class Window(QMainWindow):
 
     def __init__(self):
         super(Window, self).__init__()
+        self.dlg = RealizationDlg(self.realization)
         self.analyzer = GraphAnalyzerWindow()
         self.drawing_window = DrawingWindow(myRealization=self.realization)
         self.setWindowTitle("CPC-Graphs constructor")
@@ -172,11 +173,10 @@ class Window(QMainWindow):
         dlg.exec()
 
     def show_realization(self):
-        dlg = RealizationDlg(self.realization)
-        dlg.setWindowTitle("CPC-Graph to current realization")
-        dlg.resize(800, 600)
+        self.dlg.setWindowTitle("CPC-Graph to current realization")
+        self.dlg.resize(800, 600)
 
-        dlg.exec()
+        self.dlg.show()
 
     def start_graph_analyzer(self):
         self.analyzer.show()

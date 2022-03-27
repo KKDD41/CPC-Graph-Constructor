@@ -168,16 +168,17 @@ class GraphAnalyzerWindow(QWidget):
     def show_current_graph(self):
         nx.draw(self.currentGraph, with_labels=True)
         plt.savefig("graph_analyzer.png")
+        plt.close()
 
-        dlg = QDialog(self)
-        dlg.setWindowTitle("CPC-Graph to current realization")
-        dlg.resize(800, 600)
+        dlg1 = QDialog(self)
+        dlg1.setWindowTitle("CPC-Graph to current realization")
+        dlg1.resize(800, 600)
 
-        labelImage = QLabel(dlg)
-        pixmap = QPixmap("graph_analyzer.png").scaled(dlg.width(), dlg.height())
-        labelImage.setPixmap(pixmap)
+        labelImage1 = QLabel(dlg1)
+        pixmap1 = QPixmap("graph_analyzer.png").scaled(dlg1.width(), dlg1.height())
+        labelImage1.setPixmap(pixmap1)
 
-        dlg.exec()
+        dlg1.exec()
 
     def load_file(self):
         current_option = self.options.index(self.combo.currentText())
