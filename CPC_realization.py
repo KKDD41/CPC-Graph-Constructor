@@ -5,15 +5,14 @@ import numpy as np
 
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 
-"""
-Class of CPC-graph realization that contains a CPC-graph and coordinates of corresponding polygonal chain.
-It provides following methods:
-    -- create_graph (initializing field 'graph' with CPC-graph of given polygonal chain)
-    
-"""
-
 
 class Realization:
+    """
+    Class of CPC-graph realization that contains a CPC-graph and coordinates of corresponding polygonal chain.
+    It provides following methods:
+        -- create_graph (initializing field 'graph' with CPC-graph of given polygonal chain)
+
+    """
     vector_of_segments = []
     graph = nx.Graph()
 
