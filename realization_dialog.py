@@ -2,14 +2,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPainter
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from CPC_realization import Realization, alphabet
-from drawing_window import DrawingWindow
+from CPC_realization import Realization, alphabet, graph_to_string
+import pyrebase
 
 
 class RealizationDlg(QWidget):
-    def __init__(self, myRealization):
+    def __init__(self, myRealization, storage):
         super().__init__()
         self.realization = myRealization
+        self.storage = storage
 
         layout = QtWidgets.QVBoxLayout(self)
         self.button = QtWidgets.QPushButton(self)
@@ -48,4 +49,8 @@ class RealizationDlg(QWidget):
     def save_realization(self):
         image = self.label.pixmap().toImage()
         image.save('realization.png')
+
+        self.realization.create_graph()
+        graph_string = graph_to_string(self.realization.graph)
+        self.storage.child(graph_string).put("realization.png")
 

@@ -18,9 +18,10 @@ class Window(QMainWindow):
     """
     realization = Realization()
 
-    def __init__(self):
+    def __init__(self, storage):
         super(Window, self).__init__()
-        self.dlg = RealizationDlg(self.realization)
+        self.storage = storage
+        self.dlg = RealizationDlg(self.realization, self.storage)
         self.analyzer = GraphAnalyzerWindow()
         self.drawing_window = DrawingWindow(myRealization=self.realization)
         self.setWindowTitle("CPC-Graphs constructor")

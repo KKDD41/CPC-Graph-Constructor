@@ -1,4 +1,3 @@
-import networkx as nx
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
@@ -9,10 +8,10 @@ alphabet = "abcdefghijklmnopqrstuvwxyz"
 def graph_to_string(graph):
     result = ''
     for v in graph.nodes:
-        result += 'v '
+        result += f'{v}'
         for u in graph.neighbors(v):
-            result += 'u '
-        result += '\n'
+            result += f'{u}'
+        result += '_'
     return result
 
 
