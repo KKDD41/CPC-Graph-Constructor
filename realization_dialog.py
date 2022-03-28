@@ -3,14 +3,12 @@ from PyQt5.QtGui import QPainter
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from CPC_realization import Realization, alphabet, graph_to_string
-import pyrebase
 
 
 class RealizationDlg(QWidget):
-    def __init__(self, myRealization, storage):
+    def __init__(self, myRealization):
         super().__init__()
         self.realization = myRealization
-        self.storage = storage
 
         layout = QtWidgets.QVBoxLayout(self)
         self.button = QtWidgets.QPushButton(self)
@@ -20,7 +18,7 @@ class RealizationDlg(QWidget):
         layout.addWidget(self.button)
 
         self.label = QtWidgets.QLabel()
-        canvas = QtGui.QPixmap(800, 800)
+        canvas = QtGui.QPixmap(1500, 1500)
         canvas.fill(QtCore.Qt.white)
         self.label.setPixmap(canvas)
         layout.addWidget(self.label)
@@ -48,9 +46,9 @@ class RealizationDlg(QWidget):
 
     def save_realization(self):
         image = self.label.pixmap().toImage()
-        image.save('realization.png')
-
         self.realization.create_graph()
-        graph_string = graph_to_string(self.realization.graph)
-        self.storage.child(graph_string).put("realization.png")
+        print(self.realization.vector_of_segments)
 
+        graph_file_name = graph_to_string(self.realization.graph)
+        print(graph_file_name)
+        image.save(f'{graph_file_name}.jpeg')

@@ -1,11 +1,13 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPainter
+import webbrowser
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import networkx as nx
 from numpy import gcd
 import matplotlib.pyplot as plt
+from CPC_realization import graph_to_string
+import pyrebase
 
 
 class GraphAnalyzerWindow(QWidget):
@@ -13,6 +15,8 @@ class GraphAnalyzerWindow(QWidget):
         super().__init__()
         self.dlg = QFileDialog()
         self.currentGraph = nx.Graph()
+        self.url_to_realization = None
+
         self.setWindowTitle('Graph analyzer')
 
         self.file_name = ''
@@ -151,11 +155,6 @@ class GraphAnalyzerWindow(QWidget):
         self.show_graph.setFont(QFont('Calibri', 12))
         self.horizontal_layout.addWidget(self.show_graph)
 
-        self.show_realization = QtWidgets.QPushButton(self.horizontal_widget)
-        self.show_realization.setText('Show realization')
-        self.show_realization.setFont(QFont('Calibri', 12))
-        self.horizontal_layout.addWidget(self.show_realization)
-
         layout.addWidget(self.horizontal_widget, 3, 1)
 
         # Connecting buttons
@@ -215,6 +214,7 @@ class GraphAnalyzerWindow(QWidget):
     def analyze(self):
         self.set_flags()
 
+        self.database_call()
         self.upper_bound_edges()
         self.hamilton()
         self.path()
@@ -313,4 +313,24 @@ class GraphAnalyzerWindow(QWidget):
                     self.result += 'Current graph is regular and belongs to CPC-class. \n'
 
     def database_call(self):
-        pass
+        if self.DB_access:
+            firebase = pyrebase.initialize_app({
+                "apiKey": "AIzaSyDc1dnrvTzR7Y5uDWJzDRtfACferheZgI4",
+                "authDomain": "cpc-graphs.firebaseapp.com",
+                "projectId": "cpc-graphs",
+                "storageBucket": "cpc-graphs.appspot.com",
+                "messagingSenderId": "344220732549",
+                "appId": "1:344220732549:web:e9f58e10540bfa6e45edec",
+                "measurementId": "G-XQ625HPKBH",
+                "databaseURL": "https://cpc-graphs-default-rtdb.firebaseio.com"
+            })
+            storage = firebase.storage()
+
+            graph_string = graph_to_string(self.currentGraph)
+            self.url_to_realization = storage.child(f'{graph_string}.png').get_url(None)
+            print(self.url_to_realization)
+            if self.url_to_realization is None:
+                self.result += 'Realization was not found in Database. \n'
+            else:
+                self.result += 'There is a realization in Database,\n therefore the graph belongs to CPC-class.\n'
+

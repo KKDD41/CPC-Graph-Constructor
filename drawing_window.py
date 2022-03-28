@@ -18,7 +18,7 @@ class DrawingWindow(QWidget):
         self.realization.add_vertex(self.x, self.y)
 
         # Window params
-        self.resize(800, 600)
+        self.resize(1700, 1500)
         self.setWindowTitle("Draw here your closed polygonal chain")
 
         layout = QtWidgets.QVBoxLayout(self)
