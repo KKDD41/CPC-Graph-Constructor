@@ -25,6 +25,7 @@ if __name__ == "__main__":
 
     for file in os.listdir('C:\\Users\\Kate\\PycharmProjects\\CPC_Graphs'):
         if file.endswith('.jpeg'):
+            print(file)
             storage.child(file).put(file)
 
     sys.exit()

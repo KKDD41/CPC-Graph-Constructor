@@ -112,7 +112,7 @@ class Window(QMainWindow):
         self.link_article.setText(' ->  ' + link_template)
         self.vert_layout.addWidget(self.link_article)
 
-        link_template = '<a href=https://Google.com>Link to the database.</a>'
+        link_template = '<a href=https://console.firebase.google.com/project/cpc-graphs/storage/cpc-graphs.appspot.com/files>Link to the database.</a>'
         self.link_db = HyperlinkLabel(self)
         self.link_db.setText(' ->  ' + link_template)
         self.vert_layout.addWidget(self.link_db)

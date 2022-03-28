@@ -50,7 +50,8 @@ class Realization:
                 if (min(self.vector_of_segments[i][0], self.vector_of_segments[i + 1][0]) < x < max(
                         self.vector_of_segments[i][0], self.vector_of_segments[i + 1][0])) and (min(
                     self.vector_of_segments[j][0], self.vector_of_segments[(j + 1) % n][0]) < x < max(
-                    self.vector_of_segments[j][0], self.vector_of_segments[(j + 1) % n][0])):
+                    self.vector_of_segments[j][0], self.vector_of_segments[(j + 1) % n][0])) and (abs(i - j) != 1) and\
+                        (i != 1 and j != (n - 1)):
                     self.graph.add_edge(alphabet[i], alphabet[j])
         nx.draw(self.graph, with_labels=True)
         plt.savefig("graph.png")

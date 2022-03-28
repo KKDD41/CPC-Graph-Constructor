@@ -80,11 +80,11 @@ class DrawingWindow(QWidget):
 
     def mousePressEvent(self, event):
         if self.drawing_mode:
-            self.realization.add_vertex(self.x, self.y)
 
             # If current vertex is too close to the first one, polygonal chain closes.
             if abs(self.realization.vector_of_segments[0][0] - event.x()) > 10 or abs(
                     self.realization.vector_of_segments[0][1] - event.y()) > 10:
+                self.realization.add_vertex(self.x, self.y)
                 self.x = event.x()
                 self.y = event.y()
             else:
